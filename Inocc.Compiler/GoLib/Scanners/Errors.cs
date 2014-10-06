@@ -34,7 +34,7 @@ namespace Inocc.Compiler.GoLib.Scanners
     //
     public class ErrorList : IError, IReadOnlyList<Error>
     {
-        internal List<Error> p = new List<Error>();
+        internal readonly List<Error> p = new List<Error>();
 
         // Add adds an Error with given position and error message to an ErrorList.
         public void Add(Position pos, string msg)

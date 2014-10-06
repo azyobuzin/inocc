@@ -391,7 +391,7 @@ namespace Inocc.Compiler.GoLib.Parsers
         }
 
         // A bailout panic is raised to indicate early termination.
-        public class Bailout : Exception { }
+        internal class Bailout : Exception { }
 
         private void error(Pos pos, string msg)
         {
@@ -495,7 +495,7 @@ namespace Inocc.Compiler.GoLib.Parsers
             return false;
         }
 
-        public class ParserAssertionException : Exception
+        internal class ParserAssertionException : Exception
         {
             public ParserAssertionException(string message) : base(message) { }
         }

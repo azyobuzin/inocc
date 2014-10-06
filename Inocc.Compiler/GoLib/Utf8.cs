@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Inocc.Compiler.GoLib
 {
-    public static class Utf8
+    internal static class Utf8
     {
         public const int RuneError = '\uFFFD';
         public const int RuneSelf = 0x80;

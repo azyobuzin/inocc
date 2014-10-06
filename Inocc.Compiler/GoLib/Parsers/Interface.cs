@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Inocc.Compiler.GoLib.Ast;
+using Inocc.Compiler.GoLib.Scanners;
 using Inocc.Compiler.GoLib.Tokens;
 
 namespace Inocc.Compiler.GoLib.Parsers
@@ -69,14 +70,14 @@ namespace Inocc.Compiler.GoLib.Parsers
         // representing the fragments of erroneous source code). Multiple errors
         // are returned via a scanner.ErrorList which is sorted by file position.
         //
-        public static Tuple<FileNode, IError> ParseFile(FileSet fset, string filename, object src, Mode mode)
+        public static Tuple<FileNode, ErrorList> ParseFile(FileSet fset, string filename, object src, Mode mode)
         {
             // get source
             var text = readSource(filename, src);
 
             var p = new parser();
             FileNode f = null;
-            IError err = null;
+            ErrorList err = null;
 
             try
             {
@@ -84,24 +85,24 @@ namespace Inocc.Compiler.GoLib.Parsers
                 p.init(fset, filename, text, mode);
                 f = p.parseFile();
             }
-            catch (parser.Bailout)
-            {
-                // set result values
-                if (f == null)
-                {
-                    // source is not a valid Go source file - satisfy
-                    // ParseFile API and return a valid (but) empty
-                    // *ast.File
-                    f = new FileNode
-                    {
-                        Name = new Ident(),
-                        Scope = new Scope(null)
-                    };
-                }
+            catch (parser.Bailout) { }
 
-                p.errors.Sort();
-                err = p.errors.Err();
+            // set result values
+            if (f == null)
+            {
+                // source is not a valid Go source file - satisfy
+                // ParseFile API and return a valid (but) empty
+                // *ast.File
+                f = new FileNode
+                {
+                    Name = new Ident(),
+                    Scope = new Scope(null)
+                };
             }
+
+            p.errors.Sort();
+            err = p.errors;
+
             return Tuple.Create(f, err);
         }
 
@@ -117,9 +118,9 @@ namespace Inocc.Compiler.GoLib.Parsers
         // returned. If a parse error occurred, a non-nil but incomplete map and the
         // first error encountered are returned.
         //
-        public static Tuple<IReadOnlyDictionary<string, PackageNode>, IError> ParseDir(FileSet fset, string path, Func<FileInfo, bool> filter, Mode mode)
+        public static Tuple<IReadOnlyDictionary<string, PackageNode>, ErrorList> ParseDir(FileSet fset, string path, Func<FileInfo, bool> filter, Mode mode)
         {
-            IError first = null;
+            ErrorList first = null;
             var list = new DirectoryInfo(path).EnumerateFiles();
             var pkgs = new Dictionary<string, PackageNode>();
             foreach (var d in list)
@@ -152,14 +153,14 @@ namespace Inocc.Compiler.GoLib.Parsers
                 }
             }
 
-            return new Tuple<IReadOnlyDictionary<string, PackageNode>, IError>(pkgs, first);
+            return new Tuple<IReadOnlyDictionary<string, PackageNode>, ErrorList>(pkgs, first);
         }
 
         // ParseExpr is a convenience function for obtaining the AST of an expression x.
         // The position information recorded in the AST is undefined. The filename used
         // in error messages is the empty string.
         //
-        public static Tuple<Expr, IError> ParseExpr(string x)
+        public static Tuple<Expr, ErrorList> ParseExpr(string x)
         {
             var p = new parser();
             p.init(new FileSet(), "", Encoding.UTF8.GetBytes(x), 0);
@@ -185,10 +186,10 @@ namespace Inocc.Compiler.GoLib.Parsers
             if (p.errors.Len() > 0)
             {
                 p.errors.Sort();
-                return new Tuple<Expr, IError>(null, p.errors.Err());
+                return new Tuple<Expr, ErrorList>(null, p.errors);
             }
 
-            return new Tuple<Expr, IError>(e, null);
+            return new Tuple<Expr, ErrorList>(e, null);
         }
     }
 }

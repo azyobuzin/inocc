@@ -30,22 +30,13 @@ namespace Inocc.Compiler.GoLib.Ast
     }
 
     // All expression nodes implement the Expr interface.
-    public abstract class Expr : Node
-    {
-        protected internal virtual void exprNode() { }
-    }
+    public abstract class Expr : Node { }
 
     // All statement nodes implement the Stmt interface.
-    public abstract class Stmt : Node
-    {
-        protected internal virtual void stmtNode() { }
-    }
+    public abstract class Stmt : Node { }
 
     // All declaration nodes implement the Decl interface.
-    public abstract class Decl : Node
-    {
-        protected internal virtual void declNode() { }
-    }
+    public abstract class Decl : Node { }
 
     // ----------------------------------------------------------------------------
     // Comments
@@ -1121,10 +1112,7 @@ namespace Inocc.Compiler.GoLib.Ast
     // constant, type, or variable declaration.
     //
     // The Spec type stands for any of *ImportSpec, *ValueSpec, and *TypeSpec.
-    public abstract class Spec : Node
-    {
-        public virtual void specNode() { }
-    }
+    public abstract class Spec : Node { }
 
     // An ImportSpec node represents a single package import.
     public class ImportSpec : Spec
