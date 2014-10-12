@@ -12,9 +12,11 @@ namespace Inocc.Compiler.GoLib.Parsers
     // They control the amount of source code parsed and other optional
     // parser functionality.
     //
+    [Flags]
     public enum Mode : uint
     {
-        PackageClauseOnly = 1, // stop parsing after package clause
+        Zero,
+        PackageClauseOnly, // stop parsing after package clause
         ImportsOnly, // stop parsing after import declarations
         ParseComments, // parse comments and add them to AST
         Trace, // print a trace of parsed productions

@@ -42,5 +42,10 @@ namespace Inocc.Compiler.CodeTree
         {
             return this.dict.ContainsKey(key);
         }
+
+        public static SymbolTable CreateBuiltin()
+        {
+            return new SymbolTable(); //TODO
+        }
     }
 }

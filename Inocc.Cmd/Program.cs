@@ -18,7 +18,7 @@ namespace Inocc.Cmd
                 fset,
                 @"C:\GoSrc\src\github.com\azyobuzin\img.azyobuzi.net\main.go",
                 null,
-                Mode.Trace
+                Mode.Zero
             );
             Debugger.Break();
         }
