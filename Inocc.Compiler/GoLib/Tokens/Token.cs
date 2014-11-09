@@ -180,7 +180,7 @@ namespace Inocc.Compiler.GoLib.Tokens
             tokens[(int)Token.LPAREN] = "(";
             tokens[(int)Token.LBRACK] = "[";
             tokens[(int)Token.LBRACE] = "{";
-            tokens[(int)Token.COMMA] = ";";
+            tokens[(int)Token.COMMA] = ",";
             tokens[(int)Token.PERIOD] = ".";
 
             tokens[(int)Token.RPAREN] = ")";

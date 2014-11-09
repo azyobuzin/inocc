@@ -290,7 +290,7 @@ namespace Inocc.Compiler.GoLib.Scanners
         private static bool isLetter(int ch)
         {
             if (ch == -1) return false;
-            return char.IsLetter(char.ConvertFromUtf32(ch), 0);
+            return ch == '_' || char.IsLetter(char.ConvertFromUtf32(ch), 0);
         }
 
         private static bool isDigit(int ch)

@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="CodeTree\Expression.cs" />
     <Compile Include="CodeTree\FileScope.cs" />
+    <Compile Include="CodeTree\Interface.cs" />
     <Compile Include="CodeTree\LocalScope.cs" />
     <Compile Include="CodeTree\PackageScope.cs" />
     <Compile Include="CodeTree\Statement.cs" />
@@ -72,7 +73,6 @@
       <Name>Inocc.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
