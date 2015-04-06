@@ -16,7 +16,7 @@ namespace Inocc.Cmd
             var fset = new FileSet();
             var t = Parser.ParseFile(
                 fset,
-                @"C:\GoSrc\src\github.com\azyobuzin\img.azyobuzi.net\main.go",
+                "test.go",
                 null,
                 Mode.Zero
             );

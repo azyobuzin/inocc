@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Inocc.Compiler.CodeTree
 {
-    public class SymbolTable
+    /*public class SymbolTable
     {
         public SymbolTable()
         {
@@ -47,5 +47,5 @@ namespace Inocc.Compiler.CodeTree
         {
             return new SymbolTable(); //TODO
         }
-    }
+    }*/
 }
