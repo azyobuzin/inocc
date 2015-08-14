@@ -43,9 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Complex.cs" />
-    <Compile Include="GoGC.cs" />
     <Compile Include="GoPackageAttribute.cs" />
-    <Compile Include="GoString.cs" />
+    <Compile Include="GoPointer.cs" />
+    <Compile Include="PanicException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
