@@ -62,22 +62,19 @@ namespace Inocc.Compiler.GoLib.Scanners
             // Note that it is not sufficient to simply compare file offsets because
             // the offsets do not reflect modified line information (through //line
             // comments).
-            if (e.Filename.CompareTo(f.Filename) < 0)
+            if (e.Filename != f.Filename)
             {
-                return true;
+                return string.CompareOrdinal(e.Filename, f.Filename) < 0;
             }
-            if (e.Filename == f.Filename)
+            if (e.Line != f.Line)
             {
-                if (e.Line < f.Line)
-                {
-                    return true;
-                }
-                if (e.Line == f.Line)
-                {
-                    return e.Column < f.Column;
-                }
+                return e.Line < f.Line;
             }
-            return false;
+            if (e.Column != f.Column)
+            {
+                return e.Column < f.Column;
+            }
+            return string.CompareOrdinal(p[i].Msg, p[j].Msg) < 0;
         }
 
         // Sort sorts an ErrorList. *Error entries are sorted by position,

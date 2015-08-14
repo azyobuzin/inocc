@@ -745,11 +745,12 @@ namespace Inocc.Compiler.GoLib.Ast
 
     // An EmptyStmt node represents an empty statement.
     // The "position" of the empty statement is the position
-    // of the immediately preceding semicolon.
+    // of the immediately following (explicit or implicit) semicolon.
     //
     public class EmptyStmt : Stmt
     {
-        public int Semicolon { get; set; } // position of preceding ";"
+        public int Semicolon { get; set; } // position of following ";"
+        public bool Implicit { get; set; } // if set, ";" was omitted in the source
 
         public override int Pos
         {
@@ -758,7 +759,14 @@ namespace Inocc.Compiler.GoLib.Ast
 
         public override int End
         {
-            get { return this.Semicolon + 1; /* len(";") */ }
+            get
+            {
+                if (this.Implicit)
+                {
+                    return this.Semicolon;
+                }
+                return this.Semicolon + 1; /* len(";") */
+            }
         }
     }
 

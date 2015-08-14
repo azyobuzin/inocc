@@ -14,8 +14,8 @@ namespace Inocc.Compiler.GoLib.Tokens
     // where base and size are specified when adding the file to the file set via
     // AddFile.
     //
-    // To create the Pos value for a specific source offset, first add
-    // the respective file to the current file set (via FileSet.AddFile)
+    // To create the Pos value for a specific source offset (measured in bytes),
+    // first add the respective file to the current file set using FileSet.AddFile
     // and then call File.Pos(offset) for that file. Given a Pos value p
     // for a specific file set fset, the corresponding Position value is
     // obtained by calling fset.Position(p).
@@ -40,9 +40,9 @@ namespace Inocc.Compiler.GoLib.Tokens
         public string Filename { get; set; } // filename, if any
         public int Offset { get; set; } // offset, starting at 0
         public int Line { get; set; } // line number, starting at 1
-        public int Column { get; set; } // column number, starting at 1 (character count)
+        public int Column { get; set; } // column number, starting at 1 (byte count)
 
-        // IsValid returns true if the position is valid.
+        // IsValid reports whether the position is valid.
         public bool IsValid()
         {
             return this.Line > 0;
@@ -161,7 +161,7 @@ namespace Inocc.Compiler.GoLib.Tokens
             }
         }
 
-        // SetLines sets the line offsets for a file and returns true if successful.
+        // SetLines sets the line offsets for a file and reports whether it succeeded.
         // The line offsets are the offsets of the first character of each line;
         // for instance for the content "ab\nc\n" the line offsets are {0, 3}.
         // An empty file has an empty line offset table.

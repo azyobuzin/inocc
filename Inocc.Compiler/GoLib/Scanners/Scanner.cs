@@ -872,7 +872,7 @@ namespace Inocc.Compiler.GoLib.Scanners
                                 this.insertSemi = false; // newline consumed
                                 return Tuple.Create(pos, Token.SEMICOLON, "\n");
                             }
-                            lit = this.scanComment();
+                            var comment = this.scanComment();
                             if ((this.mode & Mode.ScanComments) == 0)
                             {
                                 // skip comment
@@ -880,6 +880,7 @@ namespace Inocc.Compiler.GoLib.Scanners
                                 goto scanAgain;
                             }
                             tok = Token.COMMENT;
+                            lit = comment;
                         }
                         else
                         {

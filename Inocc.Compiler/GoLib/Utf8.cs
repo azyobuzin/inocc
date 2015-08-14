@@ -127,8 +127,11 @@ namespace Inocc.Compiler.GoLib
             return Tuple.Create(RuneError, 1, false);
         }
 
-        // DecodeRune unpacks the first UTF-8 encoding in p and returns the rune and its width in bytes.
-        // If the encoding is invalid, it returns (RuneError, 1), an impossible result for correct UTF-8.
+        // DecodeRune unpacks the first UTF-8 encoding in p and returns the rune and
+        // its width in bytes. If p is empty it returns (RuneError, 0). Otherwise, if
+        // the encoding is invalid, it returns (RuneError, 1). Both are impossible
+        // results for correct UTF-8.
+        //
         // An encoding is invalid if it is incorrect UTF-8, encodes a rune that is
         // out of range, or is not the shortest possible UTF-8 encoding for the
         // value. No other validation is performed.
@@ -236,8 +239,10 @@ namespace Inocc.Compiler.GoLib
             return Tuple.Create(RuneError, 1, false);
         }
 
-        // DecodeRuneInString is like DecodeRune but its input is a string.
-        // If the encoding is invalid, it returns (RuneError, 1), an impossible result for correct UTF-8.
+        // DecodeRuneInString is like DecodeRune but its input is a string. If s is
+        // empty it returns (RuneError, 0). Otherwise, if the encoding is invalid, it
+        // returns (RuneError, 1). Both are impossible results for correct UTF-8.
+        //
         // An encoding is invalid if it is incorrect UTF-8, encodes a rune that is
         // out of range, or is not the shortest possible UTF-8 encoding for the
         // value. No other validation is performed.

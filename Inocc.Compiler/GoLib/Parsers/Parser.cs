@@ -1603,7 +1603,7 @@ namespace Inocc.Compiler.GoLib.Parsers
             }
         }
 
-        private Expr parseElement(bool keyOk)
+        private Expr parseValue(bool keyOk)
         {
             try
             {
@@ -1633,16 +1633,38 @@ namespace Inocc.Compiler.GoLib.Parsers
                 {
                     if (this.tok == Token.COLON)
                     {
-                        var colon = this.pos;
-                        this.next();
                         // Try to resolve the key but don't collect it
                         // as unresolved identifier if it fails so that
                         // we don't get (possibly false) errors about
                         // undeclared names.
                         this.tryResolve(x, false);
-                        return new KeyValueExpr { Key = x, Colon = colon, Value = this.parseElement(false) };
                     }
-                    this.resolve(x); // not a key
+                    else
+                    {
+                        // not a key
+                        this.resolve(x);
+                    }
+                }
+
+                return x;
+            }
+            finally
+            {
+                if (this.trace)
+                    Un(Trace(this, "Element"));
+            }
+        }
+
+        private Expr parseElement()
+        {
+            try
+            {
+                var x = this.parseValue(true);
+                if (this.tok == Token.COLON)
+                {
+                    var colon = this.pos;
+                    this.next();
+                    x = new KeyValueExpr { Key = x, Colon = colon, Value = this.parseValue(false) };
                 }
 
                 return x;
@@ -1661,7 +1683,7 @@ namespace Inocc.Compiler.GoLib.Parsers
                 var list = new List<Expr>();
                 while (this.tok != Token.RBRACE && this.tok != Token.EOF)
                 {
-                    list.Add(this.parseElement(true));
+                    list.Add(this.parseElement());
                     if (!this.atComma("composite literal"))
                     {
                         break;
@@ -1717,7 +1739,7 @@ namespace Inocc.Compiler.GoLib.Parsers
             return x;
         }
 
-        // isTypeName returns true iff x is a (qualified) TypeName.
+        // isTypeName reports whether x is a (qualified) TypeName.
         private static bool isTypeName(Expr x)
         {
             var t = x as SelectorExpr;
@@ -1725,7 +1747,7 @@ namespace Inocc.Compiler.GoLib.Parsers
             return x is BadExpr || x is Ident;
         }
 
-        // isLiteralType returns true iff x is a legal composite literal type.
+        // isLiteralType reports whether x is a legal composite literal type.
         private static bool isLiteralType(Expr x)
         {
             var t = x as SelectorExpr;
@@ -2712,6 +2734,9 @@ namespace Inocc.Compiler.GoLib.Parsers
                     case Token.LPAREN:
                     case Token.LBRACK:
                     case Token.STRUCT:
+                    case Token.MAP:
+                    case Token.CHAN:
+                    case Token.INTERFACE:
                     case Token.ADD:
                     case Token.SUB:
                     case Token.MUL:
@@ -2760,12 +2785,15 @@ namespace Inocc.Compiler.GoLib.Parsers
                         s = this.parseForStmt();
                         break;
                     case Token.SEMICOLON:
-                        s = new EmptyStmt { Semicolon = this.pos };
+                        // Is it ever possible to have an implicit semicolon
+                        // producing an empty statement in a valid program?
+                        // (handle correctly anyway)
+                        s = new EmptyStmt { Semicolon = this.pos, Implicit = this.lit == "\n" };
                         this.next();
                         break;
                     case Token.RBRACE:
                         // a semicolon may be omitted before a closing "}"
-                        s = new EmptyStmt { Semicolon = this.pos };
+                        s = new EmptyStmt { Semicolon = this.pos, Implicit = true };
                         break;
                     default:
                         // no statement found
@@ -2860,6 +2888,7 @@ namespace Inocc.Compiler.GoLib.Parsers
         {
             try
             {
+                var pos = this.pos;
                 var idents = this.parseIdentList();
                 var typ = this.tryType();
                 var values = new Expr[0];
@@ -2870,6 +2899,22 @@ namespace Inocc.Compiler.GoLib.Parsers
                     values = this.parseRhsList();
                 }
                 this.expectSemi(); // call before accessing p.linecomment
+
+                switch (keyword)
+                {
+                    case Token.VAR:
+                        if (typ == null && values == null)
+                        {
+                            this.error(pos, "missing variable type or initialization");
+                        }
+                        break;
+                    case Token.CONST:
+                        if (values == null && (iota == 0 || typ != null))
+                        {
+                            this.error(pos, "missing constant value");
+                        }
+                        break;
+                }
 
                 // Go spec: The scope of a constant or variable identifier declared inside
                 // a function begins at the end of the ConstSpec or VarSpec and ends at

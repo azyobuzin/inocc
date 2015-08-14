@@ -70,7 +70,7 @@ namespace Inocc.Compiler.GoLib
             return 0;
         }
 
-        // IsAbs returns true if the path is absolute.
+        // IsAbs reports whether the path is absolute.
         public static bool IsAbs(string path)
         {
             if (Helper.IsWindows())

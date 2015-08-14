@@ -48,12 +48,12 @@ namespace Inocc.Compiler
                                         i += 2;
                                         break;
                                     case 'u':
-                                        ms.Write(GoString.UTF8.GetBytes(char.ConvertFromUtf32(
+                                        ms.Write(Encoding.UTF8.GetBytes(char.ConvertFromUtf32(
                                             Convert.ToInt32(v.Substring(i + 1, 4), 16))));
                                         i += 4;
                                         break;
                                     case 'U':
-                                        ms.Write(GoString.UTF8.GetBytes(char.ConvertFromUtf32(
+                                        ms.Write(Encoding.UTF8.GetBytes(char.ConvertFromUtf32(
                                             Convert.ToInt32(v.Substring(i + 1, 8), 16))));
                                         i += 8;
                                         break;
@@ -93,17 +93,17 @@ namespace Inocc.Compiler
                             }
                             else if (char.IsHighSurrogate(c))
                             {
-                                ms.Write(GoString.UTF8.GetBytes(new[] { c, v[++i] }));
+                                ms.Write(Encoding.UTF8.GetBytes(new[] { c, v[++i] }));
                             }
                             else
                             {
-                                ms.Write(GoString.UTF8.GetBytes(new[] { c }));
+                                ms.Write(Encoding.UTF8.GetBytes(new[] { c }));
                             }
                         }
                         return ms.ToArray();
                     }
                 case '`':
-                    return GoString.UTF8.GetBytes(v.Substring(1, v.Length - 2));
+                    return Encoding.UTF8.GetBytes(v.Substring(1, v.Length - 2));
             }
             throw new ArgumentException();
         }
