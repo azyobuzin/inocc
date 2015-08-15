@@ -47,6 +47,7 @@
     <Compile Include="GoEnvironment.cs" />
     <Compile Include="GoLanguageServices.cs" />
     <Compile Include="GoLib\Ast\Ast.cs" />
+    <Compile Include="GoLib\Ast\Walk.cs" />
     <Compile Include="GoLib\Helper.cs" />
     <Compile Include="GoLib\Ast\Scope.cs" />
     <Compile Include="GoLib\IError.cs" />

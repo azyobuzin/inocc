@@ -15,19 +15,13 @@ namespace Inocc.Compiler
             this.WorkingDirectory = workingDir;
         }
 
-        public GoEnvironment Environment { get; private set; }
+        public GoEnvironment Environment { get; }
         public DirectoryInfo WorkingDirectory { get; private set; }
 
-        private List<InoccError> errors = new List<InoccError>();
-        public IReadOnlyList<InoccError> Errors
-        {
-            get
-            {
-                return this.errors;
-            }
-        }
+        private readonly List<InoccError> errors = new List<InoccError>();
+        public IReadOnlyList<InoccError> Errors => this.errors;
 
-        private List<Package> packages = new List<Package>();
+        private readonly List<Package> packages = new List<Package>();
 
         public void AddPackage(Package pkg)
         {
@@ -39,7 +33,7 @@ namespace Inocc.Compiler
             return this.packages.FirstOrDefault(p => p.Path == path);
         }
 
-        private HashSet<string> compilingPackages = new HashSet<string>();
+        private readonly HashSet<string> compilingPackages = new HashSet<string>();
 
         public Package Require(DirectoryInfo currentPackageDir, string path)
         {
