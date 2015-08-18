@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
+using Inocc.Compiler.GoLib.Ast;
+using Inocc.Compiler.PackageModel;
 
 namespace Inocc.Compiler
 {
@@ -108,6 +110,40 @@ namespace Inocc.Compiler
             foreach (var pr in parsed)
                 foreach (var import in pr.CompilationUnit.Imports)
                     this.Require(pr.File.Directory, import.Path.Value);
+
+            var types = parsed
+                .SelectMany(pr =>
+                    pr.CompilationUnit.Decls.OfType<GenDecl>()
+                        .SelectMany(decl =>
+                            decl.Specs.OfType<TypeSpec>()
+                                .Select(x => new TypeDeclaration(x)))
+                )
+                .ToArray();
+
+            IReadOnlyDictionary<TypeSpec, TypeDeclaration> typesDic =
+                types.ToDictionary(x => x.Spec);
+
+            foreach (var pr in parsed)
+            {
+                IReadOnlyDictionary<string, Symbol> env =
+                    pr.CompilationUnit.Imports
+                    .Select(import =>
+                    {
+                        var pkg = this.Require(pr.File.Directory, import.Path.Value);
+                        string key;
+                        if (import.Name == null)
+                            key = pkg.Name;
+                        else if (import.Name.Name == ".")
+                            throw new NotImplementedException();
+                        else
+                            key = import.Name.Name;
+                        return new Tuple<string, Symbol>(key, pkg);
+                    })
+                    .Concat(
+                        types.Select(x => new Tuple<string, Symbol>(x.Spec.Name.Name, x))
+                    )
+                    .ToDictionary(x => x.Item1, x => x.Item2);
+            }
 
             throw new NotImplementedException();
         }

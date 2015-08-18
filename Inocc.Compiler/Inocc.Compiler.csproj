@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Inocc.Compiler</RootNamespace>
     <AssemblyName>Inocc.Compiler</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AstVisitor.cs" />
-    <Compile Include="CodeTree\SymbolTable.cs" />
+    <Compile Include="DeclVisitor.cs" />
     <Compile Include="GoEnvironment.cs" />
     <Compile Include="GoLanguageServices.cs" />
     <Compile Include="GoLib\Ast\Ast.cs" />
@@ -52,8 +52,10 @@
     <Compile Include="GoLib\Parsers\Parser.cs" />
     <Compile Include="GoLib\Scanners\Errors.cs" />
     <Compile Include="InoccError.cs" />
-    <Compile Include="Package.cs" />
+    <Compile Include="PackageModel\Package.cs" />
     <Compile Include="CompilationContext.cs" />
+    <Compile Include="PackageModel\Symbol.cs" />
+    <Compile Include="PackageModel\TypeDeclaration.cs" />
     <Compile Include="ParseResult.cs" />
     <Compile Include="ParsingUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
