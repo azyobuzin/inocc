@@ -27,6 +27,8 @@ namespace Inocc.Compiler.GoLib.Ast
     {
         public abstract int Pos { get; } // position of first character belonging to the node
         public abstract int End { get; } // position of first character immediately after the node
+
+        public abstract T Accept<T>(AstVisitor<T> v);
     }
 
     // All expression nodes implement the Expr interface.
@@ -56,6 +58,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Slash + this.Text.Length; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitComment(this);
     }
 
     // A CommentGroup represents a sequence of comments
@@ -145,6 +149,8 @@ namespace Inocc.Compiler.GoLib.Ast
                 return string.Join("\n", lines);
             }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitCommentGroup(this);
     }
 
     // ----------------------------------------------------------------------------
@@ -171,6 +177,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Tag != null ? this.Tag.End : this.Type.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitField(this);
     }
 
     // A FieldList represents a list of Fields, enclosed by parentheses or braces.
@@ -226,6 +234,8 @@ namespace Inocc.Compiler.GoLib.Ast
             //}
             return n;
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitFieldList(this);
     }
 
     // An expression is represented by a tree consisting of one
@@ -250,6 +260,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.To; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitBadExpr(this);
     }
 
     // An Ident node represents an identifier.
@@ -291,6 +303,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             return this.Name;
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitIdent(this);
     }
 
     // An Ellipsis node stands for the "..." type in a
@@ -317,6 +331,8 @@ namespace Inocc.Compiler.GoLib.Ast
                 return this.EllipsisPos + 3; // len("...")}
             }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitEllipsis(this);
     }
 
     // A BasicLit node represents a literal of basic type.
@@ -335,6 +351,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.ValuePos + this.Value.Length; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitBasicLit(this);
     }
 
     // A FuncLit node represents a function literal.
@@ -352,6 +370,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Body.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitFuncLit(this);
     }
 
     // A CompositeLit node represents a composite literal.
@@ -371,6 +391,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Rbrace + 1; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitCompositeLit(this);
     }
 
     // A ParenExpr node represents a parenthesized expression.
@@ -389,6 +411,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Rparen + 1; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitParenExpr(this);
     }
 
     // A SelectorExpr node represents an expression followed by a selector.
@@ -406,6 +430,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Sel.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitSelectorExpr(this);
     }
 
     // An IndexExpr node represents an expression followed by an index.
@@ -425,6 +451,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Rbrack + 1; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitIndexExpr(this);
     }
 
     // An SliceExpr node represents an expression followed by slice indices.
@@ -447,6 +475,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Rbrack + 1; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitSliceExpr(this);
     }
 
     // A TypeAssertExpr node represents an expression followed by a
@@ -468,6 +498,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Rparen + 1; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitTypeAssertExpr(this);
     }
 
     // A CallExpr node represents an expression followed by an argument list.
@@ -488,6 +520,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Rparen + 1; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitCallExpr(this);
     }
 
     // A StarExpr node represents an expression of the form "*" Expression.
@@ -507,6 +541,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.X.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitStarExpr(this);
     }
 
     // A UnaryExpr node represents a unary expression.
@@ -527,6 +563,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.X.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitUnaryExpr(this);
     }
 
     // A BinaryExpr node represents a binary expression.
@@ -546,6 +584,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Y.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitBinaryExpr(this);
     }
 
     // A KeyValueExpr node represents (key : value) pairs
@@ -566,6 +606,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Value.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitKeyValueExpr(this);
     }
 
     // The direction of a channel type is indicated by one
@@ -598,6 +640,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Elt.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitArrayType(this);
     }
 
     // public class A : ExprType node represents public class a : Expr type.
@@ -616,6 +660,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Fields.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitStructType(this);
     }
 
     // Pointer types are represented via StarExpr nodes.
@@ -643,6 +689,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Results != null ? this.Results.End : this.Params.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitFuncType(this);
     }
 
     // An InterfaceType node represents an interface type.
@@ -661,6 +709,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Methods.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitInterfaceType(this);
     }
 
     // A MapType node represents a map type.
@@ -679,6 +729,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Value.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitMapType(this);
     }
 
     // A ChanType node represents a channel type.
@@ -698,6 +750,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Value.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitChanType(this);
     }
 
     // ----------------------------------------------------------------------------
@@ -725,6 +779,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.To; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitBadStmt(this);
     }
 
     // A DeclStmt node represents a declaration in a statement list.
@@ -741,6 +797,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Decl.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitDeclStmt(this);
     }
 
     // An EmptyStmt node represents an empty statement.
@@ -768,6 +826,8 @@ namespace Inocc.Compiler.GoLib.Ast
                 return this.Semicolon + 1; /* len(";") */
             }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitEmptyStmt(this);
     }
 
     // A LabeledStmt node represents a labeled statement.
@@ -786,6 +846,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Stmt.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitLabeledStmt(this);
     }
 
     // An ExprStmt node represents a (stand-alone) expression
@@ -804,6 +866,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.X.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitExprStmt(this);
     }
 
     // A SendStmt node represents a send statement.
@@ -822,6 +886,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Value.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitSendStmt(this);
     }
 
     // An IncDecStmt node represents an increment or decrement statement.
@@ -840,6 +906,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.TokPos + 2; /* len("++") */ }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitIncDecStmt(this);
     }
 
     // An AssignStmt node represents an assignment or
@@ -861,6 +929,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Rhs[this.Rhs.Length - 1].End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitAssignStmt(this);
     }
 
     // A GoStmt node represents a go statement.
@@ -878,6 +948,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Call.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitGoStmt(this);
     }
 
     // A DeferStmt node represents a defer statement.
@@ -895,6 +967,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Call.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitDeferStmt(this);
     }
 
     // A ReturnStmt node represents a return statement.
@@ -918,6 +992,8 @@ namespace Inocc.Compiler.GoLib.Ast
                 return this.Return + 6; // len("return")
             }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitReturnStmt(this);
     }
 
     // A BranchStmt node represents a break, continue, goto,
@@ -938,6 +1014,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Label != null ? this.Label.End : this.TokPos + this.Tok.String().Length; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitBranchStmt(this);
     }
 
     // A BlockStmt node represents a braced statement list.
@@ -956,6 +1034,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Rbrace + 1; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitBlockStmt(this);
     }
 
     // An IfStmt node represents an if statement.
@@ -976,6 +1056,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Else != null ? this.Else.End : this.Body.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitIfStmt(this);
     }
 
     // A CaseClause represents a case of an expression or type switch statement.
@@ -995,6 +1077,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Body.Length > 0 ? this.Body[this.Body.Length - 1].End : this.Colon + 1; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitCaseClause(this);
     }
 
     // A SwitchStmt node represents an expression switch statement.
@@ -1014,6 +1098,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Body.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitSwitchStmt(this);
     }
 
     // An TypeSwitchStmt node represents a type switch statement.
@@ -1033,6 +1119,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Body.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitTypeSwitchStmt(this);
     }
 
     // A CommClause node represents a case of a select statement.
@@ -1052,6 +1140,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Body.Length > 0 ? this.Body[this.Body.Length - 1].End : this.Colon + 1; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitCommClause(this);
     }
 
     // An SelectStmt node represents a select statement.
@@ -1069,6 +1159,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Body.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitSelectStmt(this);
     }
 
     // A ForStmt represents a for statement.
@@ -1089,6 +1181,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Body.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitForStmt(this);
     }
 
     // A RangeStmt represents a for statement with a range clause.
@@ -1111,6 +1205,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Body.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitRangeStmt(this);
     }
 
     // ----------------------------------------------------------------------------
@@ -1140,6 +1236,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.EndPos != 0 ? this.EndPos : this.Path.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitImportSpec(this);
     }
 
     // A ValueSpec node represents a constant or variable declaration
@@ -1167,6 +1265,8 @@ namespace Inocc.Compiler.GoLib.Ast
                     : this.Names[this.Names.Length - 1].End;
             }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitValueSpec(this);
     }
 
     // A TypeSpec node represents a type declaration (TypeSpec production).
@@ -1186,6 +1286,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Type.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitTypeSpec(this);
     }
 
 
@@ -1210,6 +1312,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.To; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitBadDecl(this);
     }
 
     // A GenDecl node (generic declaration node) represents an import,
@@ -1237,6 +1341,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return Helper.IsValidPos(this.Rparen) ? this.Rparen + 1 : this.Specs[0].End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitGenDecl(this);
     }
 
     // A FuncDecl node represents a function declaration.
@@ -1257,6 +1363,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Body != null ? this.Body.End : this.Type.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitFuncDecl(this);
     }
 
     // ----------------------------------------------------------------------------
@@ -1288,6 +1396,8 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return this.Decls.Length > 0 ? this.Decls[this.Decls.Length - 1].End : this.Name.End; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitFile(this);
     }
 
     // A Package node represents a set of source files
@@ -1309,5 +1419,7 @@ namespace Inocc.Compiler.GoLib.Ast
         {
             get { return 0; }
         }
+
+        public override T Accept<T>(AstVisitor<T> v) => v.VisitPackage(this);
     }
 }
