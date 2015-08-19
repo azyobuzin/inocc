@@ -1,28 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Inocc.Core
+﻿namespace Inocc.Core
 {
     public class GoPointer<T>
     {
+        public GoPointer(T value)
+        {
+            this.Set(value);
+        }
+
         public T Value;
-        public bool IsNil;
+        public bool IsNotNil;
 
         public void ThrowIfIsNil()
         {
-            if (this.IsNil)
+            if (!this.IsNotNil)
             {
                 // runtime.errorString
                 throw new PanicException("runtime error: invalid memory address or nil pointer dereference");
             }
         }
 
-        public static GoPointer<T> CreateNil()
+        public void Set(T value)
         {
-            return new GoPointer<T>() { IsNil = true };
+            this.IsNotNil = false;
+            this.Value = value;
         }
     }
 }

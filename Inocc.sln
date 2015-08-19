@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inocc.Compiler", "Inocc.Compiler\Inocc.Compiler.csproj", "{183E6C00-4582-420D-A965-86B815006326}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inocc.Cmd", "Inocc.Cmd\Inocc.Cmd.csproj", "{C97A5662-9BE7-4CA5-9D2C-CE57A6EC796E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inocc.Core", "Inocc.Core\Inocc.Core.csproj", "{181398EF-5ECC-4CE4-A1C4-0B3C018F00B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPackage", "TestPackage\TestPackage.csproj", "{1F00A3E5-34EC-4C1C-A788-83E9B298BC81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,14 @@ Global
 		{181398EF-5ECC-4CE4-A1C4-0B3C018F00B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{181398EF-5ECC-4CE4-A1C4-0B3C018F00B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{181398EF-5ECC-4CE4-A1C4-0B3C018F00B0}.Release|Win32.ActiveCfg = Release|Any CPU
+		{1F00A3E5-34EC-4C1C-A788-83E9B298BC81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F00A3E5-34EC-4C1C-A788-83E9B298BC81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F00A3E5-34EC-4C1C-A788-83E9B298BC81}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{1F00A3E5-34EC-4C1C-A788-83E9B298BC81}.Debug|Win32.Build.0 = Debug|Any CPU
+		{1F00A3E5-34EC-4C1C-A788-83E9B298BC81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F00A3E5-34EC-4C1C-A788-83E9B298BC81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F00A3E5-34EC-4C1C-A788-83E9B298BC81}.Release|Win32.ActiveCfg = Release|Any CPU
+		{1F00A3E5-34EC-4C1C-A788-83E9B298BC81}.Release|Win32.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
