@@ -8,13 +8,25 @@ namespace Inocc.Core
 {
     public struct Complex64
     {
-        public float Real;
-        public float Imaginary;
+        public Complex64(float r, float i)
+        {
+            this.Real = r;
+            this.Imaginary = i;
+        }
+
+        public readonly float Real;
+        public readonly float Imaginary;
     }
 
     public struct Complex128
     {
-        public double Real;
-        public double Imaginary;
+        public Complex128(double r, double i)
+        {
+            this.Real = r;
+            this.Imaginary = i;
+        }
+
+        public readonly double Real;
+        public readonly double Imaginary;
     }
 }

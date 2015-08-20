@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace Inocc.Core
 {
@@ -8,12 +9,6 @@ namespace Inocc.Core
         public GoString(byte[] value)
         {
             this.value = value;
-        }
-
-        public GoString(int size, RuntimeFieldHandle field)
-        {
-            this.value = new byte[size];
-            RuntimeHelpers.InitializeArray(this.value, field);
         }
 
         private readonly byte[] value;
@@ -27,6 +22,26 @@ namespace Inocc.Core
 
                 return this.value[index];
             }
+        }
+
+        public static GoString FromBytes(byte[] source)
+        {
+            var len = source.Length;
+            var b = new byte[len];
+            Buffer.BlockCopy(source, 0, b, 0, len);
+            return new GoString(b);
+        }
+
+        public static GoString FromString(string source)
+        {
+            return new GoString(Encoding.UTF8.GetBytes(source));
+        }
+
+        public static GoString FromField(int size, RuntimeFieldHandle field)
+        {
+            var b = new byte[size];
+            RuntimeHelpers.InitializeArray(b, field);
+            return new GoString(b);
         }
     }
 }
