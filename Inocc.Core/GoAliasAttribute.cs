@@ -3,7 +3,7 @@
 namespace Inocc.Core
 {
     [AttributeUsage(AttributeTargets.Struct)]
-    public class GoAliasAttribute : Attribute
+    public sealed class GoAliasAttribute : Attribute
     {
         public GoAliasAttribute(Type baseType)
         {

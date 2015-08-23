@@ -54,6 +54,8 @@
     <Compile Include="GoSlice.cs" />
     <Compile Include="GoString.cs" />
     <Compile Include="IError.cs" />
+    <Compile Include="InterfaceCast.cs" />
+    <Compile Include="InterfaceWrapper.cs" />
     <Compile Include="PanicException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rune.cs" />

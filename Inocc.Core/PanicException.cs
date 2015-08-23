@@ -2,7 +2,7 @@
 
 namespace Inocc.Core
 {
-    public class PanicException : Exception
+    public sealed class PanicException : Exception
     {
         public PanicException(object value)
         {

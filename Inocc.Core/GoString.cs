@@ -43,5 +43,13 @@ namespace Inocc.Core
             RuntimeHelpers.InitializeArray(b, field);
             return new GoString(b);
         }
+
+        public static GoSlice<byte> ToSlice(GoString s)
+        {
+            var len = s.value.Length;
+            var b = new byte[len];
+            Buffer.BlockCopy(s.value, 0, b, 0, len);
+            return new GoSlice<byte>(b, 0, len - 1);
+        }
     }
 }

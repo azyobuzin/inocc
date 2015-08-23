@@ -3,7 +3,7 @@
 namespace Inocc.Core
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public class GoPackageAttribute : Attribute
+    public sealed class GoPackageAttribute : Attribute
     {
         public GoPackageAttribute(string name, string path)
         {

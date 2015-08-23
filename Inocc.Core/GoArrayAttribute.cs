@@ -3,7 +3,7 @@
 namespace Inocc.Core
 {
     [AttributeUsage(AttributeTargets.Struct)]
-    public class GoArrayAttribute : Attribute
+    public sealed class GoArrayAttribute : Attribute
     {
         public GoArrayAttribute(Type type, int size)
         {

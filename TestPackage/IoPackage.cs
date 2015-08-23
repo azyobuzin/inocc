@@ -59,5 +59,22 @@ namespace TestPackage
         {
             Tuple<long, IError> WriteTo(Writer w);
         }
+
+        internal interface stringWriter
+        {
+            Tuple<int, IError> WriteString(GoString s);
+        }
+
+        public static Tuple<int, IError> WriteString(Writer w, GoString s)
+        {
+            var x = InterfaceCast.Cast<stringWriter>(w);
+            var sw = x.Item1;
+            var ok = x.Item2;
+            if (ok)
+            {
+                return sw.WriteString(s);
+            }
+            return w.Write(GoString.ToSlice(s));
+        }
     }
 }

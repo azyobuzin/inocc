@@ -16,18 +16,13 @@ namespace TestPackage
             return e.Value.s;
         }
 
-        private class ErrorStringWrapper : IError
+        private class ErrorStringWrapper : InterfaceWrapper<GoPointer<errorString>>, IError
         {
-            internal ErrorStringWrapper(GoPointer<errorString> value)
-            {
-                this.value = value;
-            }
-
-            private readonly GoPointer<errorString> value;
-
+            internal ErrorStringWrapper(GoPointer<errorString> value) : base(value) { }
+            
             public GoString Error()
             {
-                return this.value.Error();
+                return this.Value.Error();
             }
         }
 
