@@ -12,7 +12,6 @@ namespace TestPackage
 
         internal static GoString Error(this GoPointer<errorString> e)
         {
-            e.ThrowIfIsNil();
             return e.Value.s;
         }
 

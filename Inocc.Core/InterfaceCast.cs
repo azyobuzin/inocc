@@ -67,7 +67,7 @@ namespace Inocc.Core
 
             var baseType = typeof(InterfaceWrapper<>).MakeGenericType(source);
             var typ = moduleBuilder.Value.DefineType(
-                string.Concat("Inocc.Private.", source.Name, "_", target.Name),
+                string.Concat("Inocc.Private.", Guid.NewGuid().ToString()),
                 TypeAttributes.Class | TypeAttributes.Sealed,
                 baseType,
                 interfaces);

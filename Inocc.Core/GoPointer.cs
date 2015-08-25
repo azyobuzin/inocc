@@ -2,27 +2,13 @@
 {
     public class GoPointer<T>
     {
+        public GoPointer() { }
+
         public GoPointer(T value)
         {
-            this.Set(value);
+            this.Value = value;
         }
 
         public T Value;
-        public bool IsNotNil;
-
-        public void ThrowIfIsNil()
-        {
-            if (!this.IsNotNil)
-            {
-                // runtime.errorString
-                throw new PanicException("runtime error: invalid memory address or nil pointer dereference");
-            }
-        }
-
-        public void Set(T value)
-        {
-            this.IsNotNil = false;
-            this.Value = value;
-        }
     }
 }
