@@ -124,8 +124,13 @@ namespace Inocc.Core
 
         private static Type GetPackageType(Type t)
         {
-            while (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(GoPointer<>))
-                t = t.GetGenericArguments()[0];
+            while (true)
+            {
+                var p = t.GetInterfaces()
+                    .FirstOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IGoPointer<>));
+                if (p == null) break;
+                t = p.GetGenericArguments()[0];
+            }
             return t.DeclaringType;
         }
 
