@@ -103,5 +103,10 @@ namespace Inocc.Core
             Buffer.BlockCopy(y.Array, y.Offset, b, xlen, y.Count);
             return new GoString(b);
         }
+
+        public static int Len(GoString s)
+        {
+            return s.value != null ? s.value.Length : 0;
+        }
     }
 }

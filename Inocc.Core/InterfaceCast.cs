@@ -20,12 +20,13 @@ namespace Inocc.Core
         public static Tuple<T, bool> Cast<T>(object source)
         {
             var key = source.GetType();
-            if (key.IsGenericType && key.GetGenericTypeDefinition() == typeof(InterfaceWrapper<>))
+            var baseType = key.BaseType;
+            if (baseType != null && baseType.IsGenericType && baseType.GetGenericTypeDefinition() == typeof(InterfaceWrapper<>))
             {
-                var valueField = key.GetField("Value", BindingFlags.Public | BindingFlags.Instance);
+                var valueField = baseType.GetField("Value", BindingFlags.Public | BindingFlags.Instance);
                 Debug.Assert(valueField != null);
                 source = valueField.GetValue(source);
-                key = source.GetType();
+                key = baseType.GetGenericArguments()[0];
             }
 
             var t = wrapperClasses.GetOrAdd(key, x => CreateWrapperClass(x, typeof(T)));
@@ -75,8 +76,8 @@ namespace Inocc.Core
             var ctor = typ.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, sourcea);
             var ctorIl = ctor.GetILGenerator();
             ctorIl.Emit(OpCodes.Ldarg_0);
-            var baseTypeCtor = baseType.GetConstructor(sourcea);
-            Debug.Assert(baseTypeCtor != null);
+            ctorIl.Emit(OpCodes.Ldarg_1);
+            var baseTypeCtor = baseType.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)[0];
             ctorIl.Emit(OpCodes.Call, baseTypeCtor);
             ctorIl.Emit(OpCodes.Ret);
 
@@ -89,7 +90,7 @@ namespace Inocc.Core
                 Debug.Assert(m.InterfaceMethod.DeclaringType != null);
                 var builder = typ.DefineMethod(
                     string.Concat(m.InterfaceMethod.DeclaringType.Name, "_", m.InterfaceMethod.Name),
-                    MethodAttributes.Private | MethodAttributes.Final | MethodAttributes.Virtual | MethodAttributes.NewSlot,
+                    MethodAttributes.Private | MethodAttributes.Final | MethodAttributes.HideBySig | MethodAttributes.NewSlot | MethodAttributes.Virtual,
                     m.InterfaceMethod.ReturnType,
                     parameters.Select(x => x.ParameterType).ToArray());
                 for (var i = 0; i < parameters.Length; i++)
@@ -126,9 +127,17 @@ namespace Inocc.Core
         {
             while (true)
             {
-                var p = t.GetInterfaces()
-                    .FirstOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IGoPointer<>));
-                if (p == null) break;
+                Type p;
+                if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IGoPointer<>))
+                {
+                    p = t;
+                }
+                else
+                {
+                    p = t.GetInterfaces().FirstOrDefault(x =>
+                        x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IGoPointer<>));
+                    if (p == null) break;
+                }
                 t = p.GetGenericArguments()[0];
             }
             return t.DeclaringType;

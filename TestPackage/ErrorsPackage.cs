@@ -10,14 +10,14 @@ namespace TestPackage
             internal GoString s;
         }
 
-        internal static GoString Error(this GoPointer<errorString> e)
+        internal static GoString Error(this IGoPointer<errorString> e)
         {
-            return e.Value.s;
+            return e.GetValue().s;
         }
 
-        private class ErrorStringWrapper : InterfaceWrapper<GoPointer<errorString>>, IError
+        private class ErrorStringWrapper : InterfaceWrapper<IGoPointer<errorString>>, IError
         {
-            internal ErrorStringWrapper(GoPointer<errorString> value) : base(value) { }
+            internal ErrorStringWrapper(IGoPointer<errorString> value) : base(value) { }
             
             public GoString Error()
             {
