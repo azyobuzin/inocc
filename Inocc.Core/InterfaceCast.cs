@@ -92,7 +92,7 @@ namespace Inocc.Core
                     string.Concat(m.InterfaceMethod.DeclaringType.Name, "_", m.InterfaceMethod.Name),
                     MethodAttributes.Private | MethodAttributes.Final | MethodAttributes.HideBySig | MethodAttributes.NewSlot | MethodAttributes.Virtual,
                     m.InterfaceMethod.ReturnType,
-                    parameters.Select(x => x.ParameterType).ToArray());
+                    Array.ConvertAll(parameters, x => x.ParameterType));
                 for (var i = 0; i < parameters.Length; i++)
                 {
                     var p = parameters[i];

@@ -66,6 +66,10 @@
     <Compile Include="GoLib\Tokens\Token.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\external\ikvm\reflect\IKVM.Reflection.csproj">
+      <Project>{4cb170ef-dfe6-4a56-9e1b-a85449e827a7}</Project>
+      <Name>IKVM.Reflection</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Inocc.Core\Inocc.Core.csproj">
       <Project>{181398ef-5ecc-4ce4-a1c4-0b3c018f00b0}</Project>
       <Name>Inocc.Core</Name>

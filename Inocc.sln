@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inocc.Core", "Inocc.Core\In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPackage", "TestPackage\TestPackage.csproj", "{1F00A3E5-34EC-4C1C-A788-83E9B298BC81}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "external", "external", "{818548F0-9C29-4AF8-B19F-48BE4637E02A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IKVM.Reflection", "external\ikvm\reflect\IKVM.Reflection.csproj", "{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,8 +49,19 @@ Global
 		{1F00A3E5-34EC-4C1C-A788-83E9B298BC81}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1F00A3E5-34EC-4C1C-A788-83E9B298BC81}.Release|Win32.ActiveCfg = Release|Any CPU
 		{1F00A3E5-34EC-4C1C-A788-83E9B298BC81}.Release|Win32.Build.0 = Release|Any CPU
+		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Debug|Win32.Build.0 = Debug|Any CPU
+		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Release|Win32.ActiveCfg = Release|Any CPU
+		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Release|Win32.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7} = {818548F0-9C29-4AF8-B19F-48BE4637E02A}
 	EndGlobalSection
 EndGlobal

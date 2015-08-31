@@ -16,7 +16,7 @@ namespace Inocc.Compiler
             stream.Write(buffer, 0, buffer.Length);
         }
 
-        internal static byte[] ReadAsString(this Ast.BasicLit lit)
+        internal static byte[] ReadAsUTF8(this Ast.BasicLit lit)
         {
             var v = lit.Value;
             switch (v[0])
@@ -103,9 +103,22 @@ namespace Inocc.Compiler
                         return ms.ToArray();
                     }
                 case '`':
-                    return Encoding.UTF8.GetBytes(v.Substring(1, v.Length - 2));
+                    return Encoding.UTF8.GetBytes(ReadAsString(lit));
             }
-            throw new ArgumentException();
+            throw new FormatException();
+        }
+
+        internal static string ReadAsString(this Ast.BasicLit lit)
+        {
+            var v = lit.Value;
+            switch (v[0])
+            {
+                case '"':
+                    return Encoding.UTF8.GetString(ReadAsUTF8(lit));
+                case '`':
+                    return v.Substring(1, v.Length - 2);
+            }
+            throw new FormatException();
         }
     }
 }
