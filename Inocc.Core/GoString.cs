@@ -2,7 +2,6 @@
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Text;
-using JetBrains.Annotations;
 
 namespace Inocc.Core
 {
@@ -13,7 +12,6 @@ namespace Inocc.Core
             this.value = value;
         }
 
-        [CanBeNull]
         private readonly byte[] value;
 
         public byte this[int index]

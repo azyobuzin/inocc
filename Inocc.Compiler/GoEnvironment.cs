@@ -48,7 +48,7 @@ namespace Inocc.Compiler
                     break;
             }
 
-            return new GoEnvironment()
+            return new GoEnvironment
             {
                 Path = new DirectoryInfo(Environment.GetEnvironmentVariable("GOPATH")),
                 Root = new DirectoryInfo(Environment.GetEnvironmentVariable("GOROOT")),

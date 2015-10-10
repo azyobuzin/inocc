@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using Inocc.Compiler.GoLib.Tokens;
 
+#pragma warning disable RECS0093 // Convert 'if' to '&&' expression
+#pragma warning disable RECS0033 // Convert 'if' to '||' expression
+
 namespace Inocc.Compiler.GoLib.Scanners
 {
     using Pos = Int32;
@@ -87,6 +90,7 @@ namespace Inocc.Compiler.GoLib.Scanners
             }
         }
 
+        [Flags]
         public enum Mode : uint
         {
             ScanComments = 1, // return comments as COMMENT tokens

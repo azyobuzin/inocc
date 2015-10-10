@@ -1,7 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Inocc.Compiler.GoLib.Tokens;
 
 namespace Inocc.Compiler.GoLib.Scanners
@@ -39,7 +39,7 @@ namespace Inocc.Compiler.GoLib.Scanners
         // Add adds an Error with given position and error message to an ErrorList.
         public void Add(Position pos, string msg)
         {
-            p.Add(new Error() { Pos = pos, Msg = msg });
+            p.Add(new Error { Pos = pos, Msg = msg });
         }
 
         // Reset resets an ErrorList to no errors.
@@ -88,7 +88,7 @@ namespace Inocc.Compiler.GoLib.Scanners
                 var e = i.Pos;
                 var f = j.Pos;
 
-                var x = e.Filename.CompareTo(f.Filename);
+                var x = string.Compare(e.Filename, f.Filename, StringComparison.Ordinal);
                 if (x != 0) return x;
                 x = e.Line.CompareTo(f.Line);
                 if (x != 0) return x;

@@ -52,17 +52,17 @@ namespace Inocc.Compiler
             path = path.Replace('/', Path.DirectorySeparatorChar);
 
             // "./hoge"
-            if (path.StartsWith("." + Path.DirectorySeparatorChar))
+            if (path.StartsWith("." + Path.DirectorySeparatorChar, StringComparison.Ordinal))
                 return new DirectoryInfo(currentPackageDir.FullName + path.Substring(1));
 
             // "../hoge"
-            if (path.StartsWith(".." + Path.DirectorySeparatorChar))
+            if (path.StartsWith(".." + Path.DirectorySeparatorChar, StringComparison.Ordinal))
             {
                 do
                 {
                     currentPackageDir = currentPackageDir.Parent;
                     path = path.Substring(3);
-                } while (path.StartsWith(".." + Path.DirectorySeparatorChar));
+                } while (path.StartsWith(".." + Path.DirectorySeparatorChar, StringComparison.Ordinal));
 
                 return new DirectoryInfo(Path.Combine(currentPackageDir.FullName, path));
             }

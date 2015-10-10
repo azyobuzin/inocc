@@ -60,7 +60,7 @@ namespace Inocc.Core
                     && m.GetParameters().Select(x => x.ParameterType)
                         .SequenceEqual(sourcea.Concat(interfaceMethod.GetParameters().Select(x => x.ParameterType))))
                 {
-                    methods.Add(new MethodPair() { InterfaceMethod = interfaceMethod, ImplMethod = m });
+                    methods.Add(new MethodPair { InterfaceMethod = interfaceMethod, ImplMethod = m });
                 }
             }
 

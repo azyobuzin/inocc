@@ -247,7 +247,7 @@ namespace Inocc.Compiler.GoLib.Tokens
             {
                 var i = this.infos.Count;
                 if (i == 0 || this.infos[i - 1].Offset < offset && offset < this.Size)
-                    this.infos.Add(new lineInfo() { Offset = offset, Filename = filename, Line = line });
+                    this.infos.Add(new lineInfo { Offset = offset, Filename = filename, Line = line });
             }
             finally
             {
@@ -327,7 +327,7 @@ namespace Inocc.Compiler.GoLib.Tokens
         {
             var offset = p - this.Base;
             var t = this.unpack(offset, adjusted);
-            return new Position()
+            return new Position
             {
                 Offset = offset,
                 Filename = t.Item1,

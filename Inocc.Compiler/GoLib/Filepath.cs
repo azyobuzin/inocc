@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+
+#pragma warning disable RECS0147 // Redundant 'else' keyword
 
 namespace Inocc.Compiler.GoLib
 {
@@ -89,7 +89,7 @@ namespace Inocc.Compiler.GoLib
             }
             else
             {
-                return path.StartsWith("/");
+                return path.StartsWith("/", StringComparison.Ordinal);
             }
         }
 
@@ -185,7 +185,7 @@ namespace Inocc.Compiler.GoLib
             //	dotdot is index in buf where .. must stop, either because
             //		it is the leading slash or it is a leading ../../.. prefix.
             var n = path.Length;
-            var @out = new lazybuf() { path = path, volAndPath = originalPath, volLen = volLen };
+            var @out = new lazybuf { path = path, volAndPath = originalPath, volLen = volLen };
             var r = 0;
             var dotdot = 0;
             if (rooted)

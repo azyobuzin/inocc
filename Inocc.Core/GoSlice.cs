@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using JetBrains.Annotations;
 
 namespace Inocc.Core
 {
@@ -17,7 +16,6 @@ namespace Inocc.Core
             this.Count = count;
         }
 
-        [CanBeNull]
         public readonly T[] Array;
         public readonly int Offset;
         public readonly int Count;

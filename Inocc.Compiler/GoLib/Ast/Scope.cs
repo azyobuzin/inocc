@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
+#pragma warning disable RECS0105 // Type check and casts can be replaced with 'as' and null check
+
 namespace Inocc.Compiler.GoLib.Ast
 {
     // A Scope maintains the set of named language entities declared

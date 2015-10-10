@@ -6,6 +6,8 @@ using Inocc.Compiler.GoLib.Ast;
 using Inocc.Compiler.GoLib.Scanners;
 using Inocc.Compiler.GoLib.Tokens;
 
+#pragma warning disable RECS0105 // Type check and casts can be replaced with 'as' and null check
+
 namespace Inocc.Compiler.GoLib.Parsers
 {
     // A Mode value is a set of flags (or 0).
@@ -127,7 +129,7 @@ namespace Inocc.Compiler.GoLib.Parsers
             var pkgs = new Dictionary<string, PackageNode>();
             foreach (var d in list)
             {
-                if (d.Name.EndsWith(".go") && (filter == null || filter(d)))
+                if (d.Name.EndsWith(".go", StringComparison.OrdinalIgnoreCase) && (filter == null || filter(d)))
                 {
                     var filename = d.FullName;
                     var t = ParseFile(fset, filename, null, mode);

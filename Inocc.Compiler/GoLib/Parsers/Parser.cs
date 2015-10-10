@@ -5,6 +5,11 @@ using Inocc.Compiler.GoLib.Ast;
 using Inocc.Compiler.GoLib.Scanners;
 using Inocc.Compiler.GoLib.Tokens;
 
+#pragma warning disable RECS0011 // Convert 'if' to '?:'
+#pragma warning disable RECS0147 // Redundant 'else' keyword
+#pragma warning disable RECS0091 // Use 'var' keyword
+#pragma warning disable RECS0105 // Type check and casts can be replaced with 'as' and null check
+
 namespace Inocc.Compiler.GoLib.Parsers
 {
     using Pos = Int32;
@@ -22,7 +27,7 @@ namespace Inocc.Compiler.GoLib.Parsers
         private int indent; // indentation used for tracing output
 
         // Comments
-        private List<CommentGroup> comments = new List<CommentGroup>();
+        private readonly List<CommentGroup> comments = new List<CommentGroup>();
         private CommentGroup leadComment; // last lead comment
         private CommentGroup lineComment; // last line comment
 
@@ -45,8 +50,8 @@ namespace Inocc.Compiler.GoLib.Parsers
         // Ordinary identifier scopes
         internal Scope pkgScope; // pkgScope.Outer == nil
         internal Scope topScope; // top-most scope; may be pkgScope
-        private List<Ident> unresolved = new List<Ident>(); // unresolved identifiers
-        private List<ImportSpec> imports = new List<ImportSpec>(); // list of imports
+        private readonly List<Ident> unresolved = new List<Ident>(); // unresolved identifiers
+        private readonly List<ImportSpec> imports = new List<ImportSpec>(); // list of imports
 
         // Label scopes
         // (maintained by open/close LabelScope)
@@ -640,7 +645,7 @@ namespace Inocc.Compiler.GoLib.Parsers
         {
             try
             {
-                var list = new List<Ident>() { this.parseIdent() };
+                var list = new List<Ident> { this.parseIdent() };
                 while (this.tok == Token.COMMA)
                 {
                     this.next();
@@ -664,7 +669,7 @@ namespace Inocc.Compiler.GoLib.Parsers
         {
             try
             {
-                var list = new List<Expr>() { this.checkExpr(this.parseExpr(lhs)) };
+                var list = new List<Expr> { this.checkExpr(this.parseExpr(lhs)) };
                 while (this.tok == Token.COMMA)
                 {
                     this.next();
@@ -904,7 +909,7 @@ namespace Inocc.Compiler.GoLib.Parsers
                     {
                         Opening = lbrace,
                         List = list.ToArray(),
-                        Closing = rbrace,
+                        Closing = rbrace
                     }
                 };
             }
@@ -1206,7 +1211,7 @@ namespace Inocc.Compiler.GoLib.Parsers
                     {
                         Opening = lbrace,
                         List = list.ToArray(),
-                        Closing = rbrace,
+                        Closing = rbrace
                     }
                 };
             }
@@ -2352,7 +2357,7 @@ namespace Inocc.Compiler.GoLib.Parsers
         {
             try
             {
-                var list = new List<Expr>() { this.parseType() };
+                var list = new List<Expr> { this.parseType() };
                 while (this.tok == Token.COMMA)
                 {
                     this.next();

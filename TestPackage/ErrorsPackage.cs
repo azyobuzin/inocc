@@ -28,7 +28,7 @@ namespace TestPackage
         public static IError New(GoString text)
         {
             return new ErrorStringWrapper(
-                new GoPointer<errorString>(new errorString() { s = text }));
+                new GoPointer<errorString>(new errorString { s = text }));
         }
     }
 }

@@ -26,6 +26,25 @@
     }
 
     .method public final hidebysig newslot virtual instance
+        !T GetValue () cil managed
+    {
+        .maxstack 1
+        ldarg.0
+        ldfld !T class Inocc.Core.GoPointer`1<!T>::x
+        ret
+    }
+
+    .method public final hidebysig newslot virtual instance
+        void SetValue (!T 'value') cil managed
+    {
+        .maxstack 2
+        ldarg.0
+        ldarg.1
+        stfld !T class Inocc.Core.GoPointer`1<!T>::x
+        ret
+    }
+
+    .method public final hidebysig newslot virtual instance
         native int GetAddress () cil managed
     {
         .maxstack 1
@@ -59,6 +78,31 @@
     }
 
     .method public final hidebysig newslot virtual instance
+        !T GetValue () cil managed
+    {
+        .maxstack 2
+        ldarg.0
+        ldfld !T[] class Inocc.Core.ArrayElementPointer`1<!T>::'array'
+        ldarg.0
+        ldfld int32 class Inocc.Core.ArrayElementPointer`1<!T>::index
+        ldelem !T
+        ret
+    }
+
+    .method public final hidebysig newslot virtual instance
+        void SetValue (!T 'value') cil managed
+    {
+        .maxstack 3
+        ldarg.0
+        ldfld !T[] class Inocc.Core.ArrayElementPointer`1<!T>::'array'
+        ldarg.0
+        ldfld int32 class Inocc.Core.ArrayElementPointer`1<!T>::index
+        ldarg.1
+        stelem !T
+        ret
+    }
+
+    .method public final hidebysig newslot virtual instance
         native int GetAddress () cil managed
     {
         .maxstack 2
@@ -68,23 +112,6 @@
         ldfld int32 class Inocc.Core.ArrayElementPointer`1<!T>::index
         ldelema !T
         conv.u
-        ret
-    }
-}
-
-.class public auto ansi abstract sealed beforefieldinit Inocc.Core.PointerExtensions
-    extends System.Object
-{
-    .custom instance void [mscorlib]System.Runtime.CompilerServices.ExtensionAttribute::.ctor() = (01 00 00 00)
-
-    .method public hidebysig static
-        !!T GetValue<T> (class Inocc.Core.IGoPointer`1<!!T> ptr) cil managed
-    {
-        .custom instance void [mscorlib]System.Runtime.CompilerServices.ExtensionAttribute::.ctor() = (01 00 00 00)
-        .maxstack 1
-        ldarg.0
-        callvirt instance native int class Inocc.Core.IGoPointer`1<!!T>::GetAddress()
-        ldobj !!T
         ret
     }
 }
