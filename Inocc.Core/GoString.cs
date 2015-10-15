@@ -25,6 +25,11 @@ namespace Inocc.Core
             }
         }
 
+        public override string ToString()
+        {
+            return Encoding.UTF8.GetString(this.value);
+        }
+
         public static GoString FromBytes(byte[] source)
         {
             var len = source.Length;
